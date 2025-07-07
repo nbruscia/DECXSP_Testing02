@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>AR.js GitHub Pages Test</title>
-    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+        <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/AR.js/dev/aframe/build/aframe-ar.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       body { margin: 0; overflow: hidden; }
@@ -22,7 +22,7 @@
         <a-asset-item id="columnModel" src="models/column.glb"></a-asset-item>
       </a-assets>
 
-      <a-marker preset="hiro">
+      <a-marker type="pattern" url="markers/ubLogo.patt">
 
         <a-entity
           gltf-model="#columnModel"
