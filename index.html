@@ -11,7 +11,10 @@
   <body style="margin: 0px; overflow: hidden;">
     <a-scene embedded arjs="sourceType: webcam; debug: false;">
       <a-marker preset="hiro">
-        <a-box position="0 0.5 0" color="#4CC3D9" scale="0.5 0.5 0.5"></a-box>
+        <a-sphere position="-0.5 0.02 -0.5" radius="0.05" color="purple"></a-sphere>
+        <a-sphere position="-0.5 0.02 0.5" radius="0.05" color="purple"></a-sphere>
+        <a-sphere position="0.5 0.02 -0.5" radius="0.05" color="purple"></a-sphere>
+        <a-sphere position="0.5 0.02 0.5" radius="0.05" color="purple"></a-sphere>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
