@@ -16,11 +16,10 @@
   <body style="margin: 0px; overflow: hidden;">
     <a-scene embedded arjs="sourceType: webcam; debug: false;">
       <a-assets>
-        <img id="ubLogoMarker" src="markers/ubLogo.patt">
         <a-asset-item id="columnModel" src="models/column.glb"></a-asset-item>
       </a-assets>
 
-      <a-marker type="pattern" url="markers/ubLogo.patt">
+      <a-marker preset="hiro">
 
         <a-entity
           gltf-model="#columnModel"
