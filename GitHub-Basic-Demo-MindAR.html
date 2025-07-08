@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>GitHub-Basic-Demo-MindAR.html</title>
+    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  
+  <body style="margin: 0px; overflow: hidden;">
+    <a-scene embedded arjs="sourceType: webcam; debug: false;">
+      <a-assets>
+        <a-asset-item id="columnModel" src="models/Column.glb"></a-asset-item>
+      </a-assets>
+      <a-marker type="pattern" url="assets/ubLogo.patt">
+        <a-entity
+          gltf-model="#columnModel"
+          position="0 0 0"
+          rotation="-90 0 0"
+          scale="0.05 0.05 0.05"
+          animation="property: rotation; to: -90 405 0; dur: 8000; easing: linear; loop: true"
+        ></a-entity>
+        <a-sphere position="-0.5 0 -0.5" radius="0.05" color="purple"></a-sphere>
+        <a-sphere position="-0.5 0 0.5" radius="0.05" color="purple"></a-sphere>
+        <a-sphere position="0.5 0 -0.5" radius="0.05" color="purple"></a-sphere>
+        <a-sphere position="0.5 0 0.5" radius="0.05" color="purple"></a-sphere>
+      </a-marker>
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
+</html>
