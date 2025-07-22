@@ -1,0 +1,140 @@
+<!--
+
+File Name: MarkerCountColor
+= Change the color of the 3D model based on the number of markers showing.
+
+-->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MarkerCountColor</title>
+    <meta charset="UTF-8" />
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+      }
+      a-scene {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+    </style>
+
+    <script>
+      AFRAME.registerComponent('color-gradient-control', {
+        init: function () {
+          const column = document.querySelector('#columnModel');
+          const markers = [
+            document.querySelector('#marker1'),
+            document.querySelector('#marker2'),
+            document.querySelector('#marker3'),
+            document.querySelector('#marker4')
+          ];
+
+          const visibility = [false, false, false, false];
+
+          function blendColor(t) {
+            const white = { r: 1, g: 1, b: 1 };
+            const purple = { r: 0.5, g: 0, b: 0.5 };
+            return {
+              r: white.r * (1 - t) + purple.r * t,
+              g: white.g * (1 - t) + purple.g * t,
+              b: white.b * (1 - t) + purple.b * t
+            };
+          }
+
+          function updateColor() {
+            const visibleCount = visibility.filter(Boolean).length;
+            const t = visibleCount / 4;
+
+            const color = blendColor(t);
+            const mesh = column.getObject3D('mesh');
+
+            if (mesh) {
+              mesh.traverse(node => {
+                if (node.isMesh && node.material) {
+                  node.material.color.setRGB(color.r, color.g, color.b);
+                }
+              });
+            }
+
+            console.log(`Visible markers: ${visibleCount}`);
+          }
+
+          markers.forEach((marker, index) => {
+            marker.addEventListener('targetFound', () => {
+              console.log(`Marker ${index + 1} FOUND`);
+              visibility[index] = true;
+              updateColor();
+            });
+
+            marker.addEventListener('targetLost', () => {
+              console.log(`Marker ${index + 1} LOST`);
+              visibility[index] = false;
+              updateColor();
+            });
+          });
+        }
+      });
+
+      window.addEventListener('DOMContentLoaded', () => {
+        const scene = document.querySelector('a-scene');
+        scene.setAttribute('color-gradient-control', '');
+      });
+    </script>
+  </head>
+
+  <body>
+    <a-scene
+      mindar-image="imageTargetSrc: assets/Compiled_Markers.mind; maxTrack: 5"
+      color-space="sRGB"
+      embedded
+      renderer="colorManagement: true, physicallyCorrectLights"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+    >
+      <a-assets>
+        <a-asset-item id="columnGLB" src="assets/Column.glb"></a-asset-item>
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-entity
+          id="columnModel"
+          gltf-model="#columnGLB"
+          rotation="0 0 0"
+          position="0 0 0"
+          scale="0.05 0.05 0.05"
+        ></a-entity>
+      </a-entity>
+
+      <a-entity id="marker1" mindar-image-target="targetIndex: 1">
+        <a-box color="red" position="0 0.1 0" depth="0.2" height="0.2" width="0.2"></a-box>
+      </a-entity>
+
+      <a-entity id="marker2" mindar-image-target="targetIndex: 2">
+        <a-box color="green" position="0 0.1 0" depth="0.2" height="0.2" width="0.2"></a-box>
+      </a-entity>
+
+      <a-entity id="marker3" mindar-image-target="targetIndex: 3">
+        <a-box color="blue" position="0 0.1 0" depth="0.2" height="0.2" width="0.2"></a-box>
+      </a-entity>
+
+      <a-entity id="marker4" mindar-image-target="targetIndex: 4">
+        <a-box color="yellow" position="0 0.1 0" depth="0.2" height="0.2" width="0.2"></a-box>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
